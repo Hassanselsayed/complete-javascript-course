@@ -61,16 +61,137 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+
+const displayMovements = function(movements) {
+  containerMovements.innerHTML = ''
+  movements.forEach((mov, i) => {
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
+    
+    const html = `
+      <div class="movements__row">
+        <div class="movements__type movements__type--${type}">${i+1} ${type}</div>
+        <div class="movements__value">${mov}€</div>
+      </div>
+    `;
+
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  });
+}
+
+displayMovements(account1.movements);
+
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
 
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
-
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
+
+// let arr = ['a', 'b', 'c', 'd', 'e'];
+
+// // Slice
+// console.log(arr.slice(2));
+// console.log(arr.slice(1, 3));
+// console.log(arr.slice(-1));
+// console.log(arr.slice(1, -2));
+
+// // create a shallow copy of the array
+// console.log(arr.slice());
+// console.log([...arr]);
+
+// // Splice
+// console.log(arr.splice(2));
+// arr.splice(-1);
+// arr.splice(1, 2);
+// console.log(arr);
+
+// // Reverse
+// const arr2 = ['j', 'i', 'h', 'g', 'f'];
+// console.log(arr2.reverse());
+// console.log(arr2);
+
+
+// // Concat
+// const letters = arr.concat(arr2);
+// console.log(letters);
+// console.log([...arr, ...arr2]);
+
+// // Join
+// console.log(letters.join(' - '));
+
+// const arr = [23, 11, 64];
+// console.log(arr[0]);
+// console.log(arr.at(0));
+
+// // getting the last element of the array
+// console.log(arr[arr.length - 1]);
+// console.log(arr.slice(-1)[0]);
+// console.log(arr.at(-1));
+
+// // forEach method
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// for(const [i, movemenet] of movements.entries()) {
+//   if (movemenet > 0) {
+//     console.log(`Movemenet ${i + 1}: You deposited ${movemenet}`);
+//   } else {
+//     console.log(`Movemenet ${i + 1}: You withdrew ${Math.abs(movemenet)}`);
+//   }
+// }
+
+// console.log(`--------forEach-------`);
+
+// movements.forEach(function(mov, i, arr) {
+//   if (mov > 0) {
+//     console.log(`You deposited ${mov}`);
+//   } else {
+//     console.log(`You withdrew ${Math.abs(mov)}`);
+//   }
+// });
+
+// // Map
+// const currencies = new Map([
+//   ['USD', 'United States dollar'],
+//   ['EUR', 'Euro'],
+//   ['GBP', 'Pound sterling'],
+// ]);
+// currencies.forEach(function(value, key, map) {
+//   console.log(value, key, map);
+// });
+
+// // Set
+// const currenciesUnique = new Set(['USD', ' GBP', 'USD', 'EUR', 'EUR']);
+// console.log(currenciesUnique);
+// currenciesUnique.forEach(function(value, key, set) {
+//   console.log(value, key, set);
+// })
+
+// // Coding challenge 1
+// function checkDogs(dogsJulia, dogsKate) {
+//   // const dogsJuliaShallowCopy = [...dogsJulia];
+//   const dogsJuliaShallowCopy = dogsJulia.slice();
+//   dogsJuliaShallowCopy.shift();
+//   dogsJuliaShallowCopy.splice(-2);
+
+//   const combinedDogs = [...dogsJuliaShallowCopy, ...dogsKate];
+//   combinedDogs.forEach((dogAge, index) => {
+//     const stringBegin = `Dog Number ${index+1} is`
+//     if(dogAge >= 3) {
+//       console.log(`${stringBegin} an adult, and is ${dogAge} years old!`);
+//     } else {
+//       console.log(`${stringBegin} still a puppy!`);
+//     }
+//   })
+// }
+
+// const dogsJulia1 = [3, 5, 2,12, 7];
+// const dogsKate1 = [4, 1, 15, 8, 3];
+
+// const dogsJulia2 = [9, 16, 6, 8, 3];
+// const dogsKate2 = [10, 5, 6, 1, 4];
+// console.log('------Test Data 1------');
+// checkDogs(dogsJulia1, dogsKate1);
+// console.log('------Test Data 2------');
+// checkDogs(dogsJulia2, dogsKate2);
+
