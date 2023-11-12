@@ -475,5 +475,4 @@ const loadAll = async function(imgArr) {
 
   imgs.forEach(img => img.classList.add('parallel'));
 };
-
 loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);
