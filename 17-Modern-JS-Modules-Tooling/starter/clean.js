@@ -1,4 +1,5 @@
-var budget = [
+'use strict'
+const budget = Object.freeze([
   { value: 250, description: 'Sold old TV 📺', user: 'jonas' },
   { value: -45, description: 'Groceries 🥑', user: 'jonas' },
   { value: 3500, description: 'Monthly salary 👩‍💻', user: 'jonas' },
@@ -7,58 +8,46 @@ var budget = [
   { value: -20, description: 'Candy 🍭', user: 'matilda' },
   { value: -125, description: 'Toys 🚂', user: 'matilda' },
   { value: -1800, description: 'New Laptop 💻', user: 'jonas' },
-];
+]);
 
-var limits = {
+// budget[0].value = 10000; // possible
+// budget[9] = 'hassan' won't work
+
+const spendingLimits = Object.freeze({
   jonas: 1500,
   matilda: 100,
+});
+// spendingLimits.hassan = 2000;
+
+const getLimit = user => spendingLimits?.[user] ?? 0;
+
+// Pure function
+const addExprense = function (state, limits, value, description, user = 'jonas') {
+  const cleanUser = user.toLowerCase();
+
+  return value <= getLimit(cleanUser) ? [...state, { value: -value, description, user: cleanUser }] : state;
+
 };
+const newBudget1 = addExprense(budget, spendingLimits, 10, 'Pizza 🍕');
+const newBudget2 = addExprense(newBudget1, spendingLimits, 100, 'Going to movies 🍿', 'Matilda');
+const newBudget3 = addExprense(newBudget2, spendingLimits, 200, 'Stuff', 'Jay');
+console.log(newBudget3);
 
-var add = function (value, description, user) {
-  if (!user) user = 'jonas';
-  user = user.toLowerCase();
-
-  var lim;
-  if (limits[user]) {
-    lim = limits[user];
-  } else {
-    lim = 0;
-  }
-
-  if (value <= lim) {
-    budget.push({ value: -value, description: description, user: user });
-  }
+const checkExprenses = function () {
+  for (const entry of budget) 
+    if (entry.value < -getLimit(entry.user)) 
+      entry.flag = 'limit';
 };
-add(10, 'Pizza 🍕');
-add(100, 'Going to movies 🍿', 'Matilda');
-add(200, 'Stuff', 'Jay');
-console.log(budget);
+checkExprenses();
 
-var check = function () {
-  for (var el of budget) {
-    var lim;
-    if (limits[el.user]) {
-      lim = limits[el.user];
-    } else {
-      lim = 0;
-    }
+const logBigExpenses = function (bigLimit) {
+  let output = '';
+  for (const entry of budget) 
+    output += entry.value <= -bigLimit ? `${entry.description.slice(-2)} / ` : '';
 
-    if (el.value < -lim) {
-      el.flag = 'limit';
-    }
-  }
-};
-check();
-
-console.log(budget);
-
-var bigExpenses = function (limit) {
-  var output = '';
-  for (var el of budget) {
-    if (el.value <= -limit) {
-      output += el.description.slice(-2) + ' / '; // Emojis are 2 chars
-    }
-  }
-  output = output.slice(0, -2); // Remove last '/ '
+  output = output.slice(0, -3); // Remove last '/'
   console.log(output);
 };
+logBigExpenses(500);
+
+console.log(budget);
