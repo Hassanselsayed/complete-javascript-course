@@ -8,6 +8,7 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
+// import { Leaflet.draw } "leaflet-draw/dist/leaflet.draw.css";
 
 class Workout {
   date = new Date();
@@ -33,6 +34,7 @@ class Workout {
 
 class Running extends Workout {
   type = 'running';
+
 
   constructor(coords, distance, duration, cadence) {
     super(coords, distance, duration);
@@ -72,7 +74,7 @@ const cycle1 = new Cycling([39, -12], 27, 80, 523);
 // APP Architecture 
 class App {
   #map;
-  #mapZoomLevel = 13;
+  #mapZoomLevel = 15;
   #mapEvent;
   #workouts = [];
 
@@ -110,7 +112,7 @@ class App {
     const coords = [latitude, longitude];
     this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
 
-    L.tileLayer('https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.#map);
 
