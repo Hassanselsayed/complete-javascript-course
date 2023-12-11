@@ -2,13 +2,14 @@ import * as model from './model';
 import recipeView from './views/recipeView';
 import searchView from './views/searchView';
 import resultsView from './views/resultsView';
+import paginationView from './views/paginationView';
 
 import 'core-js/stable'; // polyfill
 import 'regenerator-runtime/runtime'; // polyfill async/await
 
 // https://forkify-api.herokuapp.com/v2
 
-if (module.hot) module.hot.accept();
+// if (module.hot) module.hot.accept();
 
 ///////////////////////////////////////
 const controlRecipes = async function () {
@@ -41,14 +42,26 @@ const controlSearchResults = async function () {
     await model.loadSearchResults(query);
 
     // 3) render results
-    resultsView.render(model.state.search.results);
+    resultsView.render(model.getSearchResultsPage());
+
+    // 4) render pagination
+    paginationView.render(model.state.search);
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
+};
+
+const controlPagination = function (goToPage) {
+  // render new results
+  resultsView.render(model.getSearchResultsPage(goToPage));
+
+  // render new pagination
+  paginationView.render(model.state.search);
 };
 
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
   searchView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandlerClick(controlPagination);
 };
 init();
