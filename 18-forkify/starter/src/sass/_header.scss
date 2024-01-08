@@ -38,15 +38,11 @@
     }
 
     &::placeholder {
-      color: $color-grey-light-3;
+      color: $color-grey-dark-1;
     }
 
-    @media only screen and (max-width: $bp-medium) {
+    @media only screen and (max-width: $bp-small) {
       width: auto;
-
-      &::placeholder {
-        color: white;
-      }
     }
   }
 
